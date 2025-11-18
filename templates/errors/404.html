@@ -1,0 +1,14 @@
+<!-- c:\Users\ibtih\OneDrive\Desktop\i221737_lab06\templates\errors\404.html -->
+{% extends "base.html" %}
+
+{% block title %}Page Not Found{% endblock %}
+
+{% block content %}
+<h1>404 - Page Not Found</h1>
+<p style="margin: 20px 0; color: #666;">
+    The page you are looking for doesn't exist.
+</p>
+<div class="nav-links">
+    <a href="{{ url_for('index') }}">Go to Home</a>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+<!-- c:\Users\ibtih\OneDrive\Desktop\i221737_lab06\templates\dashboard.html -->
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Secure Flask App{% endblock %}
+
+{% block content %}
+<h2>Welcome, {{ username }}! 🎉</h2>
+
+<p style="margin: 20px 0; color: #666;">
+    You have successfully logged into your secure account. Your session is protected with:
+</p>
+
+<ul style="margin: 20px 0; line-height: 2;">
+    <li>Secure session cookies (HttpOnly, Secure, SameSite)</li>
+    <li>30-minute session timeout</li>
+    <li>Bcrypt-hashed password storage</li>
+</ul>
+
+<div class="nav-links">
+    <a href="{{ url_for('logout') }}" style="color: #dc3545;">Logout</a>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+<!-- c:\Users\ibtih\OneDrive\Desktop\i221737_lab06\templates\register.html -->
+{% extends "base.html" %}
+
+{% block title %}Register - Secure Flask App{% endblock %}
+
+{% block content %}
+<h2>Create Account <span class="security-badge">CSRF Protected</span></h2>
+
+<form method="POST" action="">
+    {{ form.hidden_tag() }}  <!-- CSRF Token -->
+    
+    <div class="form-group">
+        {{ form.username.label }}
+        {{ form.username(class="form-control") }}
+        {% if form.username.errors %}
+            {% for error in form.username.errors %}
+                <div class="error">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    
+    <div class="form-group">
+        {{ form.email.label }}
+        {{ form.email(class="form-control") }}
+        {% if form.email.errors %}
+            {% for error in form.email.errors %}
+                <div class="error">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    
+    <div class="form-group">
+        {{ form.password.label }}
+        {{ form.password(class="form-control") }}
+        {% if form.password.errors %}
+            {% for error in form.password.errors %}
+                <div class="error">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+        <small style="color: #666;">Must contain: 8+ chars, uppercase, lowercase, digit, special character</small>
+    </div>
+    
+    <div class="form-group">
+        {{ form.confirm_password.label }}
+        {{ form.confirm_password(class="form-control") }}
+        {% if form.confirm_password.errors %}
+            {% for error in form.confirm_password.errors %}
+                <div class="error">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    
+    <div class="form-group">
+        {{ form.submit(class="btn btn-primary") }}
+    </div>
+</form>
+
+<div class="nav-links">
+    Already have an account? <a href="{{ url_for('login') }}">Login here</a>
+</div>
+{% endblock %}

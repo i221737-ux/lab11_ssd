@@ -1,0 +1,14 @@
+<!-- c:\Users\ibtih\OneDrive\Desktop\i221737_lab06\templates\errors\403.html -->
+{% extends "base.html" %}
+
+{% block title %}Forbidden{% endblock %}
+
+{% block content %}
+<h1>403 - Forbidden</h1>
+<p style="margin: 20px 0; color: #666;">
+    You don't have permission to access this resource.
+</p>
+<div class="nav-links">
+    <a href="{{ url_for('index') }}">Go to Home</a>
+</div>
+{% endblock %}

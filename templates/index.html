@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Secure Flask App{% endblock %}
+
+{% block content %}
+<h1>Welcome to Secure Flask Application <span class="security-badge">🔒 SECURED</span></h1>
+
+<p style="margin: 20px 0; color: #666; line-height: 1.6;">
+    This application implements 5 critical OWASP security practices:
+</p>
+
+<ul style="margin: 20px 0; line-height: 2;">
+    <li><strong>✓ Secure Input Handling:</strong> All inputs are validated and sanitized to prevent XSS and SQL injection</li>
+    <li><strong>✓ Parameterized Queries:</strong> Using SQLAlchemy ORM to prevent SQL injection attacks</li>
+    <li><strong>✓ CSRF Protection:</strong> All forms are protected with CSRF tokens</li>
+    <li><strong>✓ Secure Error Handling:</strong> Custom error pages prevent information disclosure</li>
+    <li><strong>✓ Secure Password Storage:</strong> Passwords are hashed using Bcrypt algorithm</li>
+</ul>
+
+<div class="nav-links">
+    <a href="{{ url_for('register') }}">Register</a> | 
+    <a href="{{ url_for('login') }}">Login</a>
+</div>
+{% endblock %}
