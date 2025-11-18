@@ -2,11 +2,19 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven_3'      // same name as in Jenkins tool config
+        maven 'Maven_3'
+    }
+
+    parameters {
+        booleanParam(
+            name: 'RUN_TESTS',
+            defaultValue: true,
+            description: 'Run the Test stage?'
+        )
     }
 
     environment {
-        APP_NAME = 'lab11_ssd'
+        APP_NAME   = 'lab11_ssd'
         DEPLOY_ENV = 'dev'
     }
 
@@ -14,19 +22,22 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building ${env.APP_NAME}"
-                bat 'mvn -version'     // just to show Maven is available
+                bat 'mvn -version'
             }
         }
 
         stage('Test') {
+            when {
+                expression { params.RUN_TESTS }   // only run if checkbox is true
+            }
             steps {
-                echo "Testing ${env.APP_NAME}"
+                echo "Running tests for ${env.APP_NAME}"
             }
         }
 
         stage('Deploy') {
             when {
-                branch 'main'
+                branch 'main'                     // Deploy only on main branch
             }
             steps {
                 echo "Deploying ${env.APP_NAME} to ${env.DEPLOY_ENV}"
