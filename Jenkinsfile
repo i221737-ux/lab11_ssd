@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven_3'
+        maven 'Maven_3'     // same name as in Global Tool Configuration
     }
 
     parameters {
@@ -28,7 +28,7 @@ pipeline {
 
         stage('Test') {
             when {
-                expression { params.RUN_TESTS }   // only run if checkbox is true
+                expression { params.RUN_TESTS }
             }
             steps {
                 echo "Running tests for ${env.APP_NAME}"
@@ -37,7 +37,7 @@ pipeline {
 
         stage('Deploy') {
             when {
-                branch 'main'                     // Deploy only on main branch
+                branch 'main'
             }
             steps {
                 echo "Deploying ${env.APP_NAME} to ${env.DEPLOY_ENV}"
