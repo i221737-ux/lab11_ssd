@@ -1,22 +1,30 @@
 pipeline {
     agent any
 
+    environment {
+        APP_NAME = 'lab11_ssd'
+        DEPLOY_ENV = 'dev'
+    }
+
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
+                echo "Building ${env.APP_NAME}"
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Testing..'
+                echo "Testing ${env.APP_NAME}"
             }
         }
 
         stage('Deploy') {
+            when {
+                branch 'main'
+            }
             steps {
-                echo 'Deploying....'
+                echo "Deploying ${env.APP_NAME} to ${env.DEPLOY_ENV}"
             }
         }
     }
