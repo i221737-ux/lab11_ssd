@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven_3'     // same name as in Global Tool Configuration
+        maven 'Maven_3'          // you already created this
     }
 
     parameters {
@@ -19,41 +19,98 @@ pipeline {
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                // Multibranch already checks out, but this is explicit
+                echo "Code checked out for ${env.APP_NAME}"
+            }
+        }
+
         stage('Build') {
             steps {
                 echo "Building ${env.APP_NAME}"
-                bat 'mvn -version'
+                // Example – safe command that always works:
+                bat 'echo mvn clean install (placeholder)'
             }
         }
 
-        stage('Test') {
+        stage('Static Code Analysis (SAST)') {
+            steps {
+                echo 'Running SAST scan (placeholder for SonarQube)'
+                // In a real setup you would do something like:
+                // bat 'sonar-scanner ...'
+            }
+        }
+
+        stage('Dependency Check') {
+            steps {
+                echo 'Running dependency scan (placeholder for OWASP Dependency-Check)'
+                // Example of where real command would go:
+                // bat 'dependency-check ... --out reports\\dependency-check-report.html'
+            }
+        }
+
+        stage('Container Image Scan') {
+            steps {
+                echo 'Running container scan (placeholder for Trivy/Anchore)'
+                // bat 'trivy image myapp:latest'
+            }
+        }
+
+        stage('Unit Tests') {
             when {
-                expression { params.RUN_TESTS }
+                expression { params.RUN_TESTS }   // link to your checkbox
             }
             steps {
-                echo "Running tests for ${env.APP_NAME}"
+                echo 'Running unit tests (placeholder for mvn test)'
+                // bat 'mvn test'
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy to Staging') {
+            steps {
+                echo "Deploying ${env.APP_NAME} to staging (${env.DEPLOY_ENV})"
+                // bat 'echo kubectl apply -f k8s-deployment.yaml'
+            }
+        }
+
+        stage('Security Gate') {
+            steps {
+                script {
+                    // In a REAL pipeline you would parse a report file
+                    // Here we just simulate that no High vulnerabilities were found
+                    def hasHighVulns = false
+                    if (hasHighVulns) {
+                        error "Security vulnerabilities found. Aborting the pipeline!"
+                    } else {
+                        echo 'Security gate passed (no high vulnerabilities detected)'
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to Production') {
             when {
                 branch 'main'
             }
             steps {
-                echo "Deploying ${env.APP_NAME} to ${env.DEPLOY_ENV}"
+                echo "Deploying ${env.APP_NAME} to PRODUCTION"
+                // bat 'echo kubectl apply -f k8s-prod-deployment.yaml'
             }
         }
     }
 
     post {
+        always {
+            echo 'Archiving security reports (placeholder)'
+            // Example if you had reports:
+            // archiveArtifacts artifacts: 'reports/**', allowEmptyArchive: true
+        }
         success {
-            echo '✅ Pipeline finished successfully'
+            echo '✅ Secure pipeline completed successfully!'
         }
         failure {
-            echo '❌ Pipeline failed'
-        }
-        always {
-            echo 'ℹ️ Post section executed (always)'
+            echo '❌ Secure pipeline failed!'
         }
     }
 }
