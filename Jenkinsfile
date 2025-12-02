@@ -1,3 +1,11 @@
+/*
+ * CONTRIBUTION LOG:
+ * ==================
+ * Name: Ibtihaj
+ * Roll Number: i221737
+ * Contribution: Added contribution entry and reviewed Jenkins pipeline structure – Ibtihaj (i221737)
+ */
+
 pipeline {
     agent any
 
